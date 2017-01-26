@@ -1,3 +1,4 @@
+// O(nlogn)
 #include<stdio.h>
 
 void merge_sort(int ar[],int l,int r){

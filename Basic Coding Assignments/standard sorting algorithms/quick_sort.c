@@ -1,3 +1,4 @@
+// worst case O(n*n)
 void swap ( book* a, book* b )
 {
     book t = *a;

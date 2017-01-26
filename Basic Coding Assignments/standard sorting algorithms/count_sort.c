@@ -1,3 +1,4 @@
+//COUNT SORT O(N) time complexity 0(max(ai))=space complexity
 #include<stdio.h>
 #include<time.h>
 int a[10000002],b[1000002],c[1000002] ;

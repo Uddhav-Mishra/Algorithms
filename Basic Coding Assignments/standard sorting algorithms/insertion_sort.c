@@ -1,4 +1,4 @@
-
+// O(n*n) = time complexity
 void insertion_sort(book arr[], int n)
 {
    int i, key, j;
