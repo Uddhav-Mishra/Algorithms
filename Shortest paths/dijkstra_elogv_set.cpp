@@ -49,7 +49,7 @@ int main(){
 
 
  cin >> n >> vert ;
-
+// number of vertices and edges
  while(vert--){
     cin >> x >> y >> wt ;
     v[x].pb(mp(y,wt)) ; v[y].pb(mp(x,wt)) ;

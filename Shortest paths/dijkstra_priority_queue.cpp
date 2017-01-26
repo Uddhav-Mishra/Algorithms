@@ -12,7 +12,7 @@ using namespace std ;
 
 ll n,i,j,k,flag,y ,w,h,r, x,ans,ans1,ans2,z,t,m,k1,k2 ;
 
-struct comp {
+struct comp { // comparator function
     bool operator() (const pii &a, const pii &b) {
         return a.second > b.second;
     }
@@ -28,6 +28,7 @@ int main(){
  priority_queue<ll,vector<pii >,comp > q ;
 
 cin >> n >> m ;
+// no. of nodes and edges in graph
 ll wt ;
 while(m--){
     cin >> x >> y >> wt ;
