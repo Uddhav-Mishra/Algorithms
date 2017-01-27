@@ -1,4 +1,5 @@
-// bubble sorting algorithm 0(n*n) worst case
+// Bubble Sorting Algorithm 0(n*n) Worst Case
+
 void bubble_sorter(int a[],int n){
 
 do{
