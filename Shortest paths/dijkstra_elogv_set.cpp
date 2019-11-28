@@ -17,50 +17,55 @@ map<ll,ll>m ;
 vector<pair<ll,ll> >v[200000]  ;
 ll vert,wt,src,k1,k2 ;
 
-void dijkstra(){
+void dijkstra() {
 
- for(i=1;i<=n;i++){dist[i]=inf ;   done[i]=0;  }
-// done is special set
-dist[src]=0;
+  for ( i = 1; i <= n; i++) {
+    dist[i] = inf ;
+    done[i]  ;
+  }
+  dist[src]=0;
+  k = 0 ; //visited vertices
+  set<pair<ll,ll> > s ;
+  set<pair<ll,ll> >::iterator it;
+  s.insert(mp(0ll,src));
 
- k = 0 ; //visited vertices
-set<pair<ll,ll> > s ;
-set<pair<ll,ll> >::iterator it;
-s.insert(mp(0ll,src));
-
-while(!s.empty()){
-    k2 = (*s.begin()).ss; s.erase(s.begin());
-for(i=0;i<v[k2].size();i++){
-        if(dist[v[k2][i].ff]>(dist[k2]+v[k2][i].ss)){
-            it=s.find(mp(dist[v[k2][i].ff],v[k2][i].ff));
-            if(it!=s.end()){
-                s.erase(it) ;
-            }
-    s.insert(mp(dist[k2]+v[k2][i].ss,v[k2][i].ff)) ;
+  while (!s.empty()) {
+    k2 = (*s.begin()).ss;
+    s.erase(s.begin());
+    for (i = 0; i < v[k2].size(); i++) {
+        if (dist[v[k2][i].ff] > (dist[k2]+v[k2][i].ss)) {
+          it = s.find(mp(dist[v[k2][i].ff], v[k2][i].ff));
+          if (it != s.end()) {
+            s.erase(it) ;
+          }
+          s.insert(mp(dist[k2]+v[k2][i].ss,v[k2][i].ff)) ;
         }
-         dist[v[k2][i].ff]=min(dist[v[k2][i].ff],(dist[k2]+v[k2][i].ss));
+     dist[v[k2][i].ff]=min(dist[v[k2][i].ff],(dist[k2]+v[k2][i].ss));
    }
 }
 
 }
 
-int main(){
+int main() {
+ 
  // vertices 1 to n
 
 
- cin >> n >> vert ;
-// number of vertices and edges
- while(vert--){
+  cin >> n >> vert ;
+
+ // number of vertices and edges
+  while(vert--){
     cin >> x >> y >> wt ;
     v[x].pb(mp(y,wt)) ; v[y].pb(mp(x,wt)) ;
+  }
+
+  // source vertex ;
+  cin >> src ; 
+
+  dijkstra() ;
+
+ for (i = 1; i <= n; i++) {
+   cout << dist[i] << " " ;
  }
-
- cin >> src ; // source vertex ;
-
- dijkstra() ;
-
-for(i=1;i<=n;i++){
-    cout << dist[i] << " " ;
-}
 
 }
