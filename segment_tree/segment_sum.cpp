@@ -22,6 +22,7 @@ void assign(int node, int index) {
 segtree merge(segtree a, segtree b) {
   segtree combine;
   combine.val = a.val + b.val;
+  return combine;
 }
 
 void build(int node, int l, int r) {
@@ -37,14 +38,15 @@ void build(int node, int l, int r) {
   tree[node] = merge(tree[2*node], tree[2*node+1]);
 }
 
-ll query(int node, int l, int r, int q_l, int q_r) {
+segtree query(int node, int l, int r, int q_l, int q_r) {
   if (q_r < l || r < q_l) {
-    return 0;
-  } else if (l == r) {
-    return tree[node].val;
+    segtree ret;
+    return ret;
+  } else if (l >= q_l && r <= q_r) {
+    return tree[node];
   }
   int mid = (l+r)/2;
-  return query(2*node, l, mid, q_l, q_r) + query(2*node+1, mid+1, r, q_l, q_r);
+  return merge(query(2*node, l, mid, q_l, q_r), query(2*node+1, mid+1, r, q_l, q_r));
 }
 
 
@@ -55,28 +57,32 @@ ll GetBruteSum(int l, int r) {
   }
   return ans;
 }
-void RandomizeCheck() {
-  int n = 100000;
+
+void RandomizeCheck(int n, int test_cnt) {
   srand(time(0));
   for (int i = 0; i < n; ++i) {
     a[i] = (rand() % 100000);
   }
   build(1, 0, n-1);
   
-
   int failed_cnt = 0;
-  for (int z =1; z <= 10000; z++) {
-      int l = rand()%n, r = rand()%n;
+  for (int z =1; z <= test_cnt; z++) {
+    int l = rand()%n, r = rand()%n;
     if (l > r) {
       swap(l, r);
     }
-    if (query(1, 0, n-1, l, r) != GetBruteSum(l,r)) {
+    /*
+    cout << "l ,r value = " << l << " " << r << endl;
+    cout << "query value = " << query(1, 0, n-1, l, r).val << endl;
+    cout << "brute value = " << GetBruteSum(l,r) << endl << endl;
+    */
+    if (query(1, 0, n-1, l, r).val != GetBruteSum(l,r)) {
       failed_cnt++;
     }
   }
-  cout << "Ran test for n = " << n << " Total = 10000"
-       << ", Passed  = " << 10000 - failed_cnt
-       << ", Failed = " << failed_cnt;
+  cout << "Ran test for n = " << n << " Total = " << test_cnt << endl
+       << "Passed  = " << test_cnt - failed_cnt << endl
+       << "Failed = " << failed_cnt << endl << endl;
 }
 
 int main(){
@@ -88,5 +94,6 @@ int main(){
   build(1, 0 , n-1);
   //cout << query(1, 0, n-1, 0, 2);
   
-  RandomizeCheck();
+  RandomizeCheck(10000 /* elements */, 1000 /* tests */);
+  RandomizeCheck(100 /* elements */, 100000 /* tests */);
 }
