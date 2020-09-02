@@ -49,6 +49,18 @@ segtree query(int node, int l, int r, int q_l, int q_r) {
   return merge(query(2*node, l, mid, q_l, q_r), query(2*node+1, mid+1, r, q_l, q_r));
 }
 
+void update_tree(int node, int l, int r, int index, int val) {
+  if (index < l || index > r || l > r) {
+    return;
+  } else if (l == r) {
+    assign(node, val);
+  }
+  int mid = (l+r)/2;
+  update_tree(2*node, l , mid, index, val);        // [l, mid]
+  update_tree(2*node + 1, 1+mid , r, index, val); // [mid+1, r]
+  tree[node] = merge(tree[2*node], tree[2*node+1]);
+}
+
 
 ll GetBruteSum(int l, int r) {
   ll ans = 0;
