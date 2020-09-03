@@ -39,7 +39,7 @@ void build(int node, int l, int r) {
 }
 
 segtree query(int node, int l, int r, int q_l, int q_r) {
-  if (q_r < l || r < q_l) {
+  if (q_r < l || r < q_l || l > r) {
     segtree ret;
     return ret;
   } else if (l >= q_l && r <= q_r) {
@@ -60,7 +60,6 @@ void update_tree(int node, int l, int r, int index, int val) {
   update_tree(2*node + 1, 1+mid , r, index, val); // [mid+1, r]
   tree[node] = merge(tree[2*node], tree[2*node+1]);
 }
-
 
 ll GetBruteSum(int l, int r) {
   ll ans = 0;
@@ -92,7 +91,38 @@ void RandomizeCheck(int n, int test_cnt) {
       failed_cnt++;
     }
   }
-  cout << "Ran test for n = " << n << " Total = " << test_cnt << endl
+  cout << "***Only Query Check***" << endl
+       << "Ran test for n = " << n << " Total = " << test_cnt << endl
+       << "Passed  = " << test_cnt - failed_cnt << endl
+       << "Failed = " << failed_cnt << endl << endl;
+}
+
+void RandomizeCheckWithUpdates(int n, int test_cnt) {
+  srand(time(0));
+  for (int i = 0; i < n; ++i) {
+    a[i] = (rand() % 100000);
+  }
+  build(1, 0, n-1);
+  
+  int failed_cnt = 0;
+  for (int z = 1; z <= test_cnt; z++) {
+    int decide_query = rand() % 2;
+    int l = rand()%n, r = rand()%n;
+    if (l > r) {
+      swap(l, r);
+    }
+    
+    if (decide_query) {
+      if (query(1, 0, n-1, l, r).val != GetBruteSum(l,r)) {
+        failed_cnt++;
+      }
+    } else {
+      a[l] = r;
+      update_tree(1, 0, n-1, l, r /* value */);
+    }
+  }
+  cout << "***Update/Query Check***" << endl
+       << "Ran test for n = " << n << " Total = " << test_cnt << endl
        << "Passed  = " << test_cnt - failed_cnt << endl
        << "Failed = " << failed_cnt << endl << endl;
 }
@@ -106,6 +136,9 @@ int main(){
   build(1, 0 , n-1);
   //cout << query(1, 0, n-1, 0, 2);
   
-  RandomizeCheck(10000 /* elements */, 1000 /* tests */);
+  RandomizeCheck(100000 /* elements */, 10000 /* tests */);
   RandomizeCheck(100 /* elements */, 100000 /* tests */);
+  
+  RandomizeCheckWithUpdates(100000 /* elements */, 10000 /* tests */);
+  RandomizeCheckWithUpdates(100 /* elements */, 100000 /* tests */);
 }
