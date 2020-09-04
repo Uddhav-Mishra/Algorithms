@@ -53,7 +53,8 @@ void update_tree(int node, int l, int r, int index, int val) {
   if (index < l || index > r || l > r) {
     return;
   } else if (l == r) {
-    assign(node, val);
+    assign(node, index);
+    return;
   }
   int mid = (l+r)/2;
   update_tree(2*node, l , mid, index, val);        // [l, mid]
@@ -118,7 +119,7 @@ void RandomizeCheckWithUpdates(int n, int test_cnt) {
       }
     } else {
       a[l] = r;
-      update_tree(1, 0, n-1, l, r /* value */);
+      update_tree(1, 0, n-1, l /* index */, r /* value */);
     }
   }
   cout << "***Update/Query Check***" << endl
