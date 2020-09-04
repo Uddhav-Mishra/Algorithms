@@ -15,8 +15,8 @@ struct segtree {
 };
 segtree tree[2 * 200000];
 
-void assign(int node, int index) {
-  tree[node].val = a[index];
+void assign(int node, ll val) {
+  tree[node].val = val;
 }
 
 segtree merge(segtree a, segtree b) {
@@ -29,7 +29,7 @@ void build(int node, int l, int r) {
   if (l > r) {
     return;
   } else if (l == r) {
-    assign(node, l);
+    assign(node, a[l]);
     return;
   }
   int mid = (l+r)/2;
@@ -53,7 +53,7 @@ void update_tree(int node, int l, int r, int index, int val) {
   if (index < l || index > r || l > r) {
     return;
   } else if (l == r) {
-    assign(node, index);
+    assign(node, val);
     return;
   }
   int mid = (l+r)/2;
