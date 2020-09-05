@@ -143,3 +143,8 @@ int main(){
   RandomizeCheckWithUpdates(100000 /* elements */, 10000 /* tests */);
   RandomizeCheckWithUpdates(100 /* elements */, 100000 /* tests */);
 }
+
+
+/*
+or/xor operation in array https://codeforces.com/contest/339/submission/91930411
+*/
