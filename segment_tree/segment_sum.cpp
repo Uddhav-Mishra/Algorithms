@@ -146,5 +146,6 @@ int main(){
 
 
 /*
-or/xor operation in array https://codeforces.com/contest/339/submission/91930411
+https://codeforces.com/contest/339/submission/91930411
+https://codeforces.com/contest/61/submission/92446029
 */
